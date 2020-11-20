@@ -11,6 +11,9 @@ from keras.models import Sequential
 from keras.layers import Conv2D,MaxPooling2D,Activation,Dropout,Flatten,Dense,BatchNormalization
 #import keras.backend as K
 import shutil
+from keras.models import Model
+from keras.layers import Input
+from keras.applications.vgg16 import VGG16,preprocess_input
 
 #drive.mount('/content/drive')
 #!unzip '/content/drive/My Drive/distracted_drivers.zip'
@@ -68,46 +71,50 @@ print(l)
 
 #K.clear_session()
 
-model1 = Sequential()
+model_vgg=VGG16(weights='imagenet',include_top=False,input_shape=(224,224,3))
 
+model_vgg.summary()
 
-model1.add(Conv2D(filters=32,kernel_size=(3,3),activation='relu',input_shape=(224,224,3)))
-model1.add(BatchNormalization())
-model1.add(Conv2D(filters=32,kernel_size=(3,3),activation='relu',padding='same'))
-model1.add(BatchNormalization(axis=3))
-model1.add(MaxPooling2D(pool_size=(2,2),padding='same'))
-model1.add(Dropout(0.3))
+model=Sequential()
+model.add(model_vgg)
+model.add(Flatten())
+model.add(Dense(512,activation='relu'))
+model.add(BatchNormalization())
+model.add(Dropout(0.5))
+model.add(Dense(128,activation='relu'))
+model.add(Dropout(0.25))
+model.add(Dense(10,activation='softmax'))
 
+model.summary()
 
-model1.add(Conv2D(filters=64,kernel_size=(3,3),activation='relu',padding='same'))
-model1.add(BatchNormalization())
-model1.add(Conv2D(filters=64,kernel_size=(3,3),activation='relu',padding='same'))
-model1.add(BatchNormalization(axis=3))
-model1.add(MaxPooling2D(pool_size=(2,2),padding='same'))
-model1.add(Dropout(0.3))
+for i in model_vgg.layers:
+    i.trainable=False
 
+model.compile(optimizer='rmsprop',loss='categorical_crossentropy',metrics=['accuracy'])
 
-model1.add(Conv2D(filters=128,kernel_size=(3,3),activation='relu',padding='same'))
-model1.add(BatchNormalization())
-model1.add(Conv2D(filters=128,kernel_size=(3,3),activation='relu',padding='same'))
-model1.add(BatchNormalization(axis=3))
-model1.add(MaxPooling2D(pool_size=(2,2),padding='same'))
-model1.add(Dropout(0.5))
+hist=model.fit(train,val,batch_size=64,epochs=5)
 
+model.save('vgg_model.h5')
 
-model1.add(Flatten())
-model1.add(Dense(512,activation='relu'))
-model1.add(BatchNormalization())
-model1.add(Dropout(0.5))
-model1.add(Dense(128,activation='relu'))
-model1.add(Dropout(0.25))
-model1.add(Dense(10,activation='softmax'))
+def results_vgg(link):
+    img1=cv2.imread('{}'.format(link))
+    img2=cv2.cvtColor(img1,cv2.COLOR_BGR2RGB)
+    re=cv2.resize(img2,(224,224))/255.0
+    plt.imshow(re)
+    re=img_to_array(re)
+    mm=np.ndarray(shape=(1,224,224,3),dtype=np.float32)
+    mm[0]=re
+    pred=model.predict(mm)
+    x=np.argmax(pred)
+    print(l[x])
 
-model1.compile(optimizer='rmsprop',loss='categorical_crossentropy',metrics=['accuracy'])
+#from google.colab import files
+#up=files.upload()
 
-model1.fit(train,validation_data=val,epochs=10,batch_size=64)
+#def get_link(up):
+    #for x in up.keys():
+        #link=x
+        #return link
 
-#save model
-model1.save('model_driver.h5')
-
-#model1.predict()
+#link=get_link(up)
+get_pred=results_vgg(link)
