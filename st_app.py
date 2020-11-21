@@ -2,8 +2,8 @@ import streamlit as st
 from tensorflow import keras
 import cv2
 import numpy as np
-import dlib
-from playsound import playsound
+# import dlib
+# from playsound import playsound
 
 list1 = ['Adjusting hair or makeup', 'Drinking a beverage', 'Operating the radio', 'Reaching behind', 'Safe driving', 'Talking on the phone(left)', 'Talking on the phone(right)', 'Talking to a passenger', 'Texting using phone(left)', 'Texting using phone(right)']
 
@@ -19,48 +19,60 @@ def realTime(model):
 
 	while True:
 		ret, frame = capture.read()
+		
+		# img_temp = frame
+		# can try the following line only after the model has been trained on grayscale images
+		# currently it takes only RGB inputs so we need to pass RGB image only
 		# img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 		img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-		img = cv2.resize(img, (224,224))/255
+		img = cv2.resize(img, (224,224))
+
+		img = keras.preprocessing.image.img_to_array(img)
+		img = img / 255.0
 
 		real_time.append(img)
-		x = real_time
-
-		for i in range(len(x)):
-			# x[i] = x[i].expand_dims(axis = 0)
-			# x[i] = x[i].reshape(1, 224, 224, 3)
+        
+		for i in range(len(real_time)):
 			mm = np.ndarray(shape=(1,224,224,3), dtype=np.float32)
-			mm[0] = x[i]
-
+			mm[0] = real_time[i]
+			
 			pred = model.predict(mm)
-			kk = np.argmax(pred)
+			# kk = np.argmax(pred)
 
-		cv2.putText(frame, list1[kk], (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
-		# cv2.imshow('frame', frame)
-		placeHolder.image(frame, use_column_width=True, channels='RGB')
-		# figure out how to have cv2 close with esc key
+		print("Prediction Array: {}".format(pred))
+		print("amax: {}".format(np.amax(pred)))
+		
+		if np.amax(pred) > 0:
+			kk = np.argmax(pred)
+			print("kk: {}".format(kk))
+			cv2.putText(frame, list1[kk], (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
+		
+		placeHolder.image(frame, use_column_width=True, channels='BGR')
 
 		key = cv2.waitKey(1)
-
-		# cv2.waitKey not working
+		
 		if key == 27:
 			break
-
-	# webcam not stopping even after capture.release()
-	# maybe try st.stop()
+	
+	st.stop()
 	capture.release()
 	cv2.destroyAllWindows()
-	return real_time
 
 def distractionDet(model):
 	html="""
 	<style>
-
+    .element-container:nth-child(9) {
+      left: 240px;
+      top: 0px;
+    }
 	</style>
 	"""
 
 	st.title("Distraction Detector")
-	st.markdown("Detector for distractedness")
+	st.markdown("Our distraction app takes in live video of the driver and processes the data in real-time to detect any distracted activities. When our machine-learning model returns a distracted state such as drinking a beverage, talking to a passenger and so on, the activity done is shown immediately to the driver on their dashboard screen. In such a way, a live video feed of them driving along with a real-time count of the distractedness will encourage alertness and discourage irresponsible behavior")
+
+	st.subheader("The app expects the camera to be placed above the passenger's window tilted slightly downwards, on the driver's right. Our application is optimized for such an angle and this setup would be recommended.")
+	st.subheader("Press the button below to get started. When you're done, click the Stop button on the top right. Your webcam should turn off in a few moments.")
 
 	st.markdown(html, unsafe_allow_html=True)
 
@@ -116,18 +128,18 @@ def aspect_ratio(eye):
 def yawn(landmarks, frame):
 	top, bottom = [], []
 
-	for i in range(51,54): # should rather be 51, 54
+	for i in range(51, 54):
 		x = landmarks.part(i).x
 
-	for i in range(62,65): # should rather be 62, 65
+	for i in range(62, 65):
 		y = landmarks.part(i).y
 
 	top.append((x,y))
 
-	for i in range(65,68): # should rather be 66, 69
+	for i in range(66, 69):
 		x1 = landmarks.part(i).x
 
-	for i in range(56,59): # should rather be 57, 60
+	for i in range(57, 60):
 		y1 = landmarks.part(i).y
 
 	bottom.append((x1,y1))
@@ -146,19 +158,19 @@ def detect():
 	c = 0
 	alarm = 0
 	placeHolder2 = st.empty()
-
+	
 	while True:
 		ret, frame = capture.read()
 		gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 		faces = detect(gray)
-
+		
 		for face in faces:
 			p = face.left()
 			q = face.top()
 			r = face.right()
 			s = face.bottom()
 			landmarks = predict(gray, face)
-
+			
 			for i in range(68):
 				x = landmarks.part(i).x
 				y = landmarks.part(i).y
@@ -172,47 +184,142 @@ def detect():
 			if x < eye_closed:
 				c += 1
 				if c >= eye_threshold:
-					playsound(r'file dependencies/alarm.mp3')
+					playsound(r"file dependencies/alarm.mp3")
 					c = 0
 
 			y = yawn(landmarks, frame)
 			if y > yawn_threshold:
 				cv2.putText(frame,"YOU SEEM DROWSY!", (10,30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
-
+			
 			placeHolder2.image(frame, caption="Driver Live Video", use_column_width=True)
-
+		
 		key = cv2.waitKey(1)
 		if key == 27:
 			break
-
+	
 	capture.release()
 	cv2.destroyAllWindows()
 
 def drowsinessDet():
+	
+	html="""
+	<style>
+    .element-container:nth-child(9) {
+      left: 240px;
+    }
+	</style>
+	"""
+
 	st.title("Drowsiness Detector")
+	st.markdown("Our drowsiness detection app cleverly keeps track of the driver's fatigue by monitoring the eyes as well as any yawns. If the eyes of the driver are being closed for more than a few milliseconds (something called microsleep in sleep science), an alarm is sounded immediately to alert the driver. This element has been added because microsleep can be incredibly dangerous and is often responsible for a majority of the accidents happening due to long-haul rides. In addition, if the app sees the driver yawning, a warning message is displayed indicating the driver's fatigue and suggesting pulling over for some time to take rest.")
+
+	st.markdown(html, unsafe_allow_html=True)
+
+	st.subheader("The app expects the camera to be placed above the steering wheel on top of the speedometer, directly facing the driver. Our application is optimized for such an angle and this setup would be recommended.")
+	st.subheader("Press the button below to get started. When you're done, click the Stop button on the top right. Your webcam should turn off in a few moments.")
 
 	if st.button("Launch Application"):
 		detect()
 
+# MAIN Function
 def main():
-	link = 'https://images.unsplash.com/photo-1519865241348-e0d7cd33a287?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'
-	st.image(link, use_column_width=True)
 
-	menu = ['Welcome', 'Drowsiness Detector', 'Distraction Detector']
-	option = st.sidebar.selectbox('Choose of any of our 2 web-apps', menu)
+	html = """
+	<style>
+	.sidebar .sidebar-content {
+		background-image: linear-gradient(#36cf9c, #27aedb);
+		color: white;
+	}
+	</style>
+	"""
 
-	st.title("SteerSecure ~ Driver Security")
-	st.header("SteerSecure is an ML web-app which has been trained to ensure the safety of drivers by intelligently monitoring their levels of distraction, and fatigue.")
+	st.markdown(html, unsafe_allow_html=True)
 
-	st.markdown("")
-	st.markdown("")
+	menu = ['Welcome', 'Drowsiness Detector', 'Distraction Detector', 'Nav ~ the Chatbot']
+	with st.sidebar.beta_expander("Menu", expanded=False):
+		option = st.selectbox('Select from any of our 2 web-apps', menu)
+		st.subheader("Made with ❤️ by Team Armada")
 
-	if option == 'Distraction Detector':
+	if option == 'Welcome':
+		html = """
+		<style>
+		.element-container:nth-child(4)
+		{	
+			color: #40E0D0;
+		}
+		</style>
+		"""
+
+		st.markdown(html, unsafe_allow_html=True)
+
+		link = 'https://images.unsplash.com/photo-1519865241348-e0d7cd33a287?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'
+		st.image(link, use_column_width=True)
+
+		st.title("SteerSecure 🚗 ~ Driver Safety")
+		st.header("SteerSecure is an ML web-app which has been trained to ensure the safety of drivers by intelligently monitoring their levels of distraction, and fatigue.")
+
+		st.markdown("Our goal is very simple: to ensure that everybody gets home safely. More than 44% of traffic accidents occur not due to technical malfunctions or driving errors, but simply due to fatigue. Combined often with sleep deprivation, the incredibly dangerous concept of microsleep occurs.")
+		st.markdown("[Microsleep](https://en.wikipedia.org/wiki/Microsleep) is a momentary episode of half-sleep where a person engaged in some activity, simultaneously deprived of sleep, is just about to doze off. At this point, one's eyes may shut for a few seconds without them even realizing. Countless number of accidents and mishaps have occurred due to this phenomenon of microsleep, including the infamous 1986 Chernobyl Nuclear Plant Disaster.", unsafe_allow_html=True)
+		st.markdown("SteerSecure's goal is to keep drivers safe, alert and hence, secure.")
+
+
+		st.title("Statistics")
+		st.markdown("Overworked truck drivers in India often report being forced to drive for more than 20-25 hours without stopping. This leads to a huge amount of the overturning of trucks and lorries that we often see on the highways.")
+
+		st.markdown("Below is a graph highlighting the percentage of fatigue-related crashes and after what amount of time they occurred. As you can see, the number increases exponentially, and is dangerously high for more than 12 hours. Most long-haul truck drivers drive for much longer time spans so we can clearly see how dangerous it can get not just for them but for everyone on the highway.")
+
+		st.image('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Hours_of_service_FMCSA_study.svg/560px-Hours_of_service_FMCSA_study.svg.png', use_column_width=True)
+
+		st.subheader("Not only trucks and lorries, but SteerSecure is geared towards cars as well.")
+
+		st.markdown("Several studies and surveys done throughout India highlight the dire state of drivers. More than 70% admitted to talking on the phone, listening to music while more than 5% of all surveyed drivers confessed to watching videos while driving.")
+
+		st.subheader("All-in-all, the statistics on traffic accidents in India are quite appalling. Over 400 people die tragically every day and more than 1500 are hospitalized with injuries. This is a tragic reality that we all need to try and set right. Not only is it a needless and tragic loss of life, but it also ends up costing the economy more than 1 trillion rupees in property damage and overhead economic costs every year.")
+		
+		st.title("Our aim is to try and rectify this in our own small way.")
+
+	elif option == 'Distraction Detector':
+		html = """
+		<style>
+		.element-container:nth-child(4)
+		{
+			color: #40E0D0;
+		}
+		</style>
+		"""
+
+		st.markdown(html, unsafe_allow_html=True)
+
+		st.image('https://images.unsplash.com/photo-1520088096110-20308c23a3cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80', use_column_width=True)
 		model = load_model('models/vgg_model.h5')
 		distractionDet(model)
 
 	elif option == 'Drowsiness Detector':
+		
+		html = """
+		<style>
+		.element-container:nth-child(4)
+		{
+			color: #40E0D0;
+		}
+		</style>
+		"""
+		st.markdown(html, unsafe_allow_html=True)
+
+		st.image('https://atlinjurylawgroup.com/wp-content/uploads/2019/12/image001-1.jpg', use_column_width=True)
 		drowsinessDet()
+
+	elif option == 'Nav ~ the Chatbot':
+		
+		html = """
+		<style>
+		.element-container:nth-child(3)
+		{
+			color: #40E0D0;
+		}
+		</style>
+		"""
+		st.markdown(html, unsafe_allow_html=True)
 
 if __name__ == "__main__":
 	main()
