@@ -22,7 +22,7 @@ Our goal, very simply, is to curb this loss of life and property as best we can.
 ## Problem Statement
 An application called __SteerSecure__ for driver safety using distraction detection, drowsiness detection and a proposed chatbot for informing customers.
 
-## Screenshot
+## Screenshots of the Web-App
 __Welcome Page__
 ![Screen Shot 2020-11-21 at 11 38 26](https://user-images.githubusercontent.com/20011207/99869051-13d6ff00-2bee-11eb-811b-7556592a9a2e.png)
 
