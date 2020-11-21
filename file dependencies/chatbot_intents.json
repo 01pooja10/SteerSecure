@@ -1,0 +1,64 @@
+{
+	"intents": [
+        {
+			"tag": "greeting",
+         	"patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Hiya", "Whats up"],
+         	"responses": ["Hello! How can I help? 😙", "Hi. What can I help you with? 😎", "Hey there, how can I help? 😃", "Heya! 😇 What can I help you with today?"],
+         	"context_set": ""
+        },
+        {
+			"tag": "bye",
+         	"patterns": ["Bye", "Thats all", "You can go now", "Goodbye", "I am Leaving", "I'll take leave", "I will talk later", "ok bye"],
+         	"responses": ["I'll be here if you need me!", "Bye then! Feel free to ask more questions!", "Goodbye then!", "I'll be right here in case you need me. See ya!"],
+         	"context_set": ""
+        },
+        {
+			"tag": "thanks",
+         	"patterns": ["thank you", "wow", "Good job", "Thanks a lot", "very helpful","extremely informative", "you are great", "nice", "good", "well done"],
+         	"responses": ["It's my pleasure 😇", "I am pretty cool, yeah 😋", "No problemo!", "You're very welcome 😇", "My pleasure! 💃"],
+         	"context_set": ""
+        },
+        {
+			"tag": "name",
+         	"patterns": ["what is your name", "what should I call you", "whats your name?", "who are you?", "what can you do", "what can i ask you"],
+         	"responses": ["I'm Nav, the chatbot trying to help you learn about the importance of driving safely and the terrible effects of driving under fatigue.", "I'm Nav and I am here to answer your questions about SteerSecure. You can also ask me about traffic accidents, microsleep and other details regarding our product!", "I'm Nav, the chatbot! Go ahead and ask me something about SteerSecure, traffic accidents or Microsleep!"],
+         	"context_set": ""
+        },
+        {
+			"tag": "steersecure",
+         	"patterns": ["what is steersecure", "what can steersecure do", "what is this product", "could i get some details?","what is the product", "what does this project do", "what is the use of this"],
+         	"responses": ["SteerSecure 🚗 is an integrated driver security web-application. Although we intend to have our product installed in cars, you can try our ML-powered models online as proof of concepts! We are committed to providing a safe-driving experience to people around the world and to prevent avoidable mishaps.", "We at SteerSecure 🚗 bring you an integrated vehicle safety system equipped with distraction detection as well as drowsiness detection! Our goal is to provide everybody the basic privilege to be able to drive home to your loved ones, safely.", "We are committed to building SteerSecure 🚗 into a product that can strengthen the safety of drivers everywhere and to not have people lose precious lives over avoidable accidents.", "SteerSecure 🚗 is an ML-powered application which can detect drowsiness as well as distraction in drivers and alert them regarding this. Both detection components are separate applications and can be used depending upon customer-specific requirement."],
+         	"context_set": ""
+        },
+        {
+			"tag": "accidents",
+         	"patterns": ["tell me about accidents", "how many traffic accidents occur", "how do accidents happen", "what are accidents", "tell me about traffic accidents", "tell about car crash", "tell me about crashes", "how do car crashes happen"],
+         	"responses": ["We're glad you asked. This is an important topic. Traffic accidents are some of the most unfortunate and ruinous events, and more often than not are easily preventable. Every year more than 1.35 million people fall prey to vehicle collisions and accidents, leaving most with major injuries if not death. Human factors contribute to more than 90% of car crashes. And over 20% of all crashes are related to fatigue while an even greater number are due to distracted driving. We attempt to reduce this number and put an end to death and destruction caused due to negligent driving.", "Thank you for asking, this is an important issue that needs to be addressed. The large majority of traffic accidents are caused by human error and every one in five crashes is due to distraction or fatigue related to sleep-deprivation. This is easily avoidable and our attempt is to do just that."],
+         	"context_set": ""
+	   },
+	   {
+			"tag": "microsleep",
+         	"patterns": ["what is microsleep", "what is the solution?", "what does micro sleep mean", "what is the meaning of microsleep", "how does a person microsleep", "can anyone microsleep"],
+         	"responses": ["Microsleep is a temporary period of a state of near unconsciousness where a person is almost asleep but will not realize this. It mostly occurs when somebody is sleep-deprived and fatigued but cannot get rest. Microsleep is the single biggest source of accidents caused by fatigue and it has been responsible for several infamous disasters such as the 1986 Chernobyl Power Plant explosion.", "Microsleep is a mild form of falling asleep wherein a sleep-deprived or fatigued person doze off for a few seconds at a time, without realizing that their eyes are closing. It is a huge source of fatigue-related crashes and has caused several crashes, including several plane crashes."],
+			 "context_set": ""
+		},
+		{
+			"tag": "solution",
+			"patterns": ["how to solve this", "how to reduce crash", "how to reduce crashes", "how does steersecure work", "how is it working", "how does it work", "what are you using"],
+			"responses": ["SteerSecure is committed to upholding driver safety. Both of our apps use the OpenCV computer vision library. The distraction detector is trained using the Tensorflow and Keras APIs on several images of distracted drivers and takes in a live video feed to detect any distracted activity. The live video is displayed to the driver along with a label of their activity, encouraging them to stay vigilant since their behavior is being tracked. Our drowsiness detector carefully evaluates the facial landmarks of the eyes as well as mouth and lips to detect any fatigue such as eyes shutting, microsleep or yawning. If it detects such activity, an alarm is sounded, encouraging the driver to pull over and get rested."],
+			"context_set": ""
+		},
+		{
+			"tag": "usage",
+			"patterns": ["how do i use steersecure", "how to use", "how to use this app", "i want to use steersecure", "how can i use this product"],
+			"responses": ["SteerSecure can be used by navigating to the sidebar on the left on our website and clicking on whichever application you want to try out.", "Head on over to our website and navigate to your application of choice!"],
+			"context_set": ""
+		},
+		{
+			"tag": "stats",
+			"patterns": ["what about accidents in india", "show me information about indian crash statistics", "give me accident information for india", "what are accidents like in india", "what are statistics for india", "india crashes", "statistics for accidents in india", "crashes in india", "accidents in india"],
+			"responses": ["There is no doubt about the fact that traffic accidents are a huge tragedy, not just for individuals but India as a whole. India averages approximately 4.5 lakh accidents each year, many of them fatal. Not only is it a needless and tragic loss of life, but it also ends up costing the economy more than 1 trillion rupees in property damage and overhead economic costs every year. Our aim is to try and rectify this in our small way.", "The statistics on traffic accidents in India are quite appalling. Over 400 people die tragically every day and more than 1500 are hospitalized with injuries. This is a tragic reality that we all need to try and set right. Not only is it a needless and tragic loss of life, but it also ends up costing the economy more than 1 trillion rupees in property damage and overhead economic costs every year. Our aim is to try and rectify this in our small way.", "Several studies and surveys done throughout India highlight the dire state of drivers. More than 70% admitted to talking on the phone, listening to music while more than 5% of all surveyed drivers confessed to watching videos while driving. Not only does all this cause a needless and tragic loss of life, but it also ends up costing the economy more than 1 trillion rupees in property damage and overhead economic costs every year. This is an unfortunate reality that we all live around everyday. Our aim is to try and rectify this in our small way.", "Overworked truck drivers in India often report being forced to drive for more than 20-25 hours without stopping. This leads to a huge amount of the overturning of trucks and lorries that we often see on the highways. Not only is it a needless and tragic loss of life, but it also ends up costing the economy more than 1 trillion rupees in property damage and overhead economic costs every year."],
+			"context_set": ""
+		}
+   ]
+}
