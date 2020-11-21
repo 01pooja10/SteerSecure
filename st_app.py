@@ -1,10 +1,24 @@
-import streamlit as st
-from tensorflow import keras
-import cv2
-import numpy as np
-# import dlib
-# from playsound import playsound
+# General Imports
+import streamlit as st # 8 MB
+import keras # in KBs
+import numpy as np # 16 MB
+import cv2 # approx. 35 MBs
 
+# Drowsiness Imports
+from playsound import playsound # in KBs
+import dlib # approx 4 MBs
+
+# Chatbot Imports
+import json
+import nltk
+nltk.download('punkt')
+nltk.download('wordnet')
+from nltk.stem.lancaster import LancasterStemmer
+from nltk.stem import WordNetLemmatizer
+import random
+import pickle
+
+# Distraction
 list1 = ['Adjusting hair or makeup', 'Drinking a beverage', 'Operating the radio', 'Reaching behind', 'Safe driving', 'Talking on the phone(left)', 'Talking on the phone(right)', 'Talking to a passenger', 'Texting using phone(left)', 'Texting using phone(right)']
 
 def load_model(path):
@@ -20,10 +34,6 @@ def realTime(model):
 	while True:
 		ret, frame = capture.read()
 		
-		# img_temp = frame
-		# can try the following line only after the model has been trained on grayscale images
-		# currently it takes only RGB inputs so we need to pass RGB image only
-		# img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 		img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		img = cv2.resize(img, (224,224))
 
@@ -69,7 +79,7 @@ def distractionDet(model):
 	"""
 
 	st.title("Distraction Detector")
-	st.markdown("Our distraction app takes in live video of the driver and processes the data in real-time to detect any distracted activities. When our machine-learning model returns a distracted state such as drinking a beverage, talking to a passenger and so on, the activity done is shown immediately to the driver on their dashboard screen. In such a way, a live video feed of them driving along with a real-time count of the distractedness will encourage alertness and discourage irresponsible behavior")
+	st.markdown("Our distraction app takes in live video of the driver and processes the data in real-time to detect any distracted activities. When our machine-learning model finds the user to be in a distracted state such as drinking a beverage, talking to a passenger and so on, the activity done is shown immediately to the driver on their dashboard screen. In such a way, a live video feed of them driving along with a log of their distractedness will encourage alertness and discourage irresponsible behavior.")
 
 	st.subheader("The app expects the camera to be placed above the passenger's window tilted slightly downwards, on the driver's right. Our application is optimized for such an angle and this setup would be recommended.")
 	st.subheader("Press the button below to get started. When you're done, click the Stop button on the top right. Your webcam should turn off in a few moments.")
@@ -200,6 +210,50 @@ def detect():
 	capture.release()
 	cv2.destroyAllWindows()
 
+# Chatbot
+def load_chatbot(path):
+	model = keras.models.load_model(path)
+	return model
+
+def input_bag(sen, words):
+	lemm = WordNetLemmatizer()
+	
+	bag = [0] * len(words)
+	wrds = nltk.word_tokenize(sen)
+
+	wrds = [lemm.lemmatize(w.lower()) for w in wrds]
+
+	for s in wrds:
+		for i, j in enumerate(words):
+			if j == s:
+				bag[i] = 1
+
+	return np.array(bag)
+
+def navChatbot(model, textInput):
+	with open('file dependencies/chatbot_intents.json') as file:
+		data = json.load(file,strict=False)
+	
+	words = pickle.load(open('file dependencies/words.pkl','rb'))
+	labels = pickle.load(open('file dependencies/labels.pkl','rb'))
+
+	while True:
+		if textInput.lower() == 'exit':
+			return "😴"
+
+		bag = input_bag(textInput, words)
+		result = model.predict(np.array([bag]))[0]
+		pred_index = np.argmax(result)
+
+		tag = labels[pred_index]
+
+		for val in data['intents']:
+			if val['tag'] == tag:
+				resp = val['responses']
+				break
+		
+		return random.choice(resp)
+
 def drowsinessDet():
 	
 	html="""
@@ -211,7 +265,7 @@ def drowsinessDet():
 	"""
 
 	st.title("Drowsiness Detector")
-	st.markdown("Our drowsiness detection app cleverly keeps track of the driver's fatigue by monitoring the eyes as well as any yawns. If the eyes of the driver are being closed for more than a few milliseconds (something called microsleep in sleep science), an alarm is sounded immediately to alert the driver. This element has been added because microsleep can be incredibly dangerous and is often responsible for a majority of the accidents happening due to long-haul rides. In addition, if the app sees the driver yawning, a warning message is displayed indicating the driver's fatigue and suggesting pulling over for some time to take rest.")
+	st.markdown("Our drowsiness detection app cleverly keeps track of the driver's fatigue by monitoring the eyes as well as any yawns. If the eyes of the driver are being closed for more than a few milliseconds (something called microsleep in sleep science), an alarm is sounded immediately to alert the driver. This element has been added because microsleep can be incredibly dangerous and is often responsible for a majority of the accidents happening due to long-haul rides. In addition, if the app sees the driver yawning, a warning message is displayed indicating the driver's fatigue.")
 
 	st.markdown(html, unsafe_allow_html=True)
 
@@ -237,7 +291,7 @@ def main():
 
 	menu = ['Welcome', 'Drowsiness Detector', 'Distraction Detector', 'Nav ~ the Chatbot']
 	with st.sidebar.beta_expander("Menu", expanded=False):
-		option = st.selectbox('Select from any of our 2 web-apps', menu)
+		option = st.selectbox('Select from any of our 3 applications', menu)
 		st.subheader("Made with ❤️ by Team Armada")
 
 	if option == 'Welcome':
@@ -263,7 +317,7 @@ def main():
 		st.markdown("SteerSecure's goal is to keep drivers safe, alert and hence, secure.")
 
 
-		st.title("Statistics")
+		st.title("Statistics 📈")
 		st.markdown("Overworked truck drivers in India often report being forced to drive for more than 20-25 hours without stopping. This leads to a huge amount of the overturning of trucks and lorries that we often see on the highways.")
 
 		st.markdown("Below is a graph highlighting the percentage of fatigue-related crashes and after what amount of time they occurred. As you can see, the number increases exponentially, and is dangerously high for more than 12 hours. Most long-haul truck drivers drive for much longer time spans so we can clearly see how dangerous it can get not just for them but for everyone on the highway.")
@@ -320,6 +374,18 @@ def main():
 		</style>
 		"""
 		st.markdown(html, unsafe_allow_html=True)
+
+		model = load_chatbot('models/chatbot_model.h5')
+
+		st.title("Beep, boop. This is Nav. 🤖")
+
+		hints = ["Say hello!", "Type steersecure to ask Nav about our product!", "Ask Nav what is microsleep to get a detailed explanation!", "Ask how do accidents happen to see what he has to say.", "Ask Nav how to solve this and see what he says!", ""]
+		st.subheader("Hint: {}".format(random.choice(hints)))
+
+		textInput = st.text_input("You: ", value = "Ask Nav something! When you're done, just type exit to leave!")
+		response = navChatbot(model, textInput)
+
+		st.text_area("Nav:", value=response, height=200)
 
 if __name__ == "__main__":
 	main()
