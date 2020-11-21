@@ -40,7 +40,7 @@ def detect():
             if x < eye_closed:
                 c += 1
                 if c >= eye_threshold:
-                    playsound(r'C:\Users\Pooja\Downloads\alarm.mp3')
+                    playsound(r'\alarm.mp3')
                     c = 0
 
             y = yawn(landmarks, frame)
