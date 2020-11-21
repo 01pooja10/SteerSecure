@@ -175,10 +175,10 @@ def detect():
 				x = landmarks.part(i).x
 				y = landmarks.part(i).y
 
-			yawn_threshold = 22
+			yawn_threshold = 20
 			eye_closed = 0.26
 			eye_threshold = 47
-			eye_min = 30
+			#eye_min = 30
 
 			x = EAR(landmarks, frame)
 			if x < eye_closed:
