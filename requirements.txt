@@ -14,7 +14,7 @@ boto3==1.16.23
 botocore==1.19.23
 cached-property==1.5.2
 cachetools==4.1.1
-certifi==2020.6.20
+certifi==2020.11.8
 cffi==1.14.3
 chardet==3.0.4
 click==7.1.2
@@ -57,9 +57,8 @@ nbformat==5.0.8
 nest-asyncio==1.4.3
 nltk==3.5
 notebook==6.1.5
-numpy==1.18.5
+numpy @ file:///Users/runner/miniforge3/conda-bld/numpy_1604946027634/work
 oauthlib==3.1.0
-opencv-python==4.4.0.46
 opt-einsum==3.3.0
 packaging==20.4
 pandas==1.1.4
