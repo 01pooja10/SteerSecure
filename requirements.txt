@@ -7,3 +7,4 @@ numpy==1.18.1
 dlib==19.21.0
 playsound==1.2.2
 protobuf==3.14.0
+cmake==3.18.4
