@@ -2,6 +2,8 @@ import streamlit as st
 from tensorflow import keras
 import cv2
 import numpy as np
+import dlib
+from playsound import playsound
 
 list1 = ['Adjusting hair or makeup', 'Drinking a beverage', 'Operating the radio', 'Reaching behind', 'Safe driving', 'Talking on the phone(left)', 'Talking on the phone(right)', 'Talking to a passenger', 'Texting using phone(left)', 'Texting using phone(right)']
 
@@ -12,7 +14,7 @@ def load_model(path):
 def realTime(model):
 	capture = cv2.VideoCapture(0)
 	real_time = []
-	
+
 	placeHolder = st.empty()
 
 	while True:
@@ -29,7 +31,7 @@ def realTime(model):
 			# x[i] = x[i].reshape(1, 224, 224, 3)
 			mm = np.ndarray(shape=(1,224,224,3), dtype=np.float32)
 			mm[0] = x[i]
-			
+
 			pred = model.predict(mm)
 			kk = np.argmax(pred)
 
@@ -39,11 +41,11 @@ def realTime(model):
 		# figure out how to have cv2 close with esc key
 
 		key = cv2.waitKey(1)
-			
+
 		# cv2.waitKey not working
 		if key == 27:
 			break
-	
+
 	# webcam not stopping even after capture.release()
 	# maybe try st.stop()
 	capture.release()
@@ -108,24 +110,24 @@ def aspect_ratio(eye):
 	a = np.linalg.norm(eye[1] - eye[5])
 	b = np.linalg.norm(eye[2] - eye[4])
 	c = np.linalg.norm(eye[0] - eye[3])
-	
+
 	return (a + b)/(2.0 * c)
 
 def yawn(landmarks, frame):
 	top, bottom = [], []
-	
+
 	for i in range(51,54): # should rather be 51, 54
 		x = landmarks.part(i).x
-	
+
 	for i in range(62,65): # should rather be 62, 65
 		y = landmarks.part(i).y
-	
+
 	top.append((x,y))
-    
-	for i in range(66,69): # should rather be 66, 69
+
+	for i in range(65,68): # should rather be 66, 69
 		x1 = landmarks.part(i).x
 
-	for i in range(57,60): # should rather be 57, 60
+	for i in range(56,59): # should rather be 57, 60
 		y1 = landmarks.part(i).y
 
 	bottom.append((x1,y1))
@@ -144,19 +146,19 @@ def detect():
 	c = 0
 	alarm = 0
 	placeHolder2 = st.empty()
-	
+
 	while True:
 		ret, frame = capture.read()
 		gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 		faces = detect(gray)
-		
+
 		for face in faces:
 			p = face.left()
 			q = face.top()
 			r = face.right()
 			s = face.bottom()
 			landmarks = predict(gray, face)
-			
+
 			for i in range(68):
 				x = landmarks.part(i).x
 				y = landmarks.part(i).y
@@ -170,25 +172,25 @@ def detect():
 			if x < eye_closed:
 				c += 1
 				if c >= eye_threshold:
-					playsound(r"file dependencies/alarm.mp3")
+					playsound(r'file dependencies/alarm.mp3')
 					c = 0
 
 			y = yawn(landmarks, frame)
 			if y > yawn_threshold:
 				cv2.putText(frame,"YOU SEEM DROWSY!", (10,30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
-			
+
 			placeHolder2.image(frame, caption="Driver Live Video", use_column_width=True)
-		
+
 		key = cv2.waitKey(1)
 		if key == 27:
 			break
-	
+
 	capture.release()
 	cv2.destroyAllWindows()
 
 def drowsinessDet():
 	st.title("Drowsiness Detector")
-	
+
 	if st.button("Launch Application"):
 		detect()
 
