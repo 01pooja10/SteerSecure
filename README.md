@@ -37,5 +37,5 @@ This project is licensed under the MIT License - see the [License.md](License.md
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
 <p align="center">
-	Made with ❤️ by Team Armada</a>
+	Made with ❤️  by Team Armada</a>
 </p>
