@@ -5,7 +5,7 @@ import numpy as np # 16 MB
 import cv2 # approx. 35 MBs
 
 # Drowsiness Imports
-from playsound import playsound # in KBs
+import playsound # in KBs
 import dlib # approx 4 MBs
 
 # Chatbot Imports
