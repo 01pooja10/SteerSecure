@@ -9,9 +9,11 @@ def load_model(path):
 def realTime(model):
 	capture = cv2.VideoCapture(0)
 	real_time = []
+	
+	placeHolder = st.empty()
 
 	while True:
-		ret, frame = caputre.read()
+		ret, frame = capture.read()
 		# img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 		img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 		img = cv2.resize(img, (224,224))
@@ -29,10 +31,13 @@ def realTime(model):
 			kk = np.argmax(pred)
 
 			cv2.putText(frame, list1[kk], (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
-			cv2.imshow('frame', frame)
+			# cv2.imshow('frame', frame)
+			# placeHolder.image(frame)
+			# figure out how to have cv2 close with esc key
 
 			key = cv2.waitKey(1)
-
+			
+			# cv2.waitKey not working
 			if key == 27:
 				break
 		
