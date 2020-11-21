@@ -5,8 +5,8 @@ import numpy as np
 import cv2
 
 # Drowsiness Imports
-# import playsound
-# from playsound import playsound
+from pydub import AudioSegment
+from pydub.playback import play
 import dlib
 
 # Chatbot Imports
@@ -139,18 +139,18 @@ def aspect_ratio(eye):
 def yawn(landmarks, frame):
 	top, bottom = [], []
 
-	for i in range(51, 54):
+	for i in range(50, 53):
 		x = landmarks.part(i).x
 
-	for i in range(62, 65):
+	for i in range(61, 64):
 		y = landmarks.part(i).y
 
 	top.append((x,y))
 
-	for i in range(65, 68):
+	for i in range(56, 59):
 		x1 = landmarks.part(i).x
 
-	for i in range(56, 59):
+	for i in range(65, 68):
 		y1 = landmarks.part(i).y
 
 	bottom.append((x1,y1))
@@ -188,15 +188,14 @@ def detect():
 
 			yawn_threshold = 20
 			eye_closed = 0.26
-			eye_threshold = 47
-			#eye_min = 30
+			eye_threshold = 30
 
 			x = EAR(landmarks, frame)
 			if x < eye_closed:
 				c += 1
 				if c >= eye_threshold:
-					# playsound(r"file dependencies/alarm.mp3")
-					cv2.putText(frame,"YOU SEEM TIRED! GET SOME REST!", (10,30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
+					song = AudioSegment.from_wav('file dependencies/alarm.wav')
+					play(song)
 					c = 0
 
 			y = yawn(landmarks, frame)
