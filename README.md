@@ -1,13 +1,14 @@
 # SteerSecure
 __Driver Safety and Security__
 
+## Data
 __Dataset Used__: State Farm Distracted Driver Detection.
 
 You may find the dataset for distracted drivers below at:
 
 https://www.kaggle.com/c/state-farm-distracted-driver-detection
 
-
+## Description
 **SteerSecure** is a driver-safety app built using machine learning libraries such as Tensorflow and OpenCV, and scripted and deployed to the web using Streamlit. Our aim with SteerSecure is to make vehicular travel safer. Our two primary web-applications are:
 
 -  Distraction Detection
@@ -18,6 +19,10 @@ The data is very clear: more than 30% of accidents are caused due to fatigue cau
 
 Our goal, very simply, is to curb this loss of life and property as best we can. SteerSecure aims to discourage distracted drivers and encourage drowsy drivers to take rest, or pull over before continuing on the journey later.
 
+## Problem Statement
+An application called __SteerSecure__ for driver safety using distraction detection, drowsiness detection and a proposed chatbot for informing customers.
+
+## Screenshot
 __Welcome Page__
 ![Screen Shot 2020-11-21 at 11 38 26](https://user-images.githubusercontent.com/20011207/99869051-13d6ff00-2bee-11eb-811b-7556592a9a2e.png)
 
