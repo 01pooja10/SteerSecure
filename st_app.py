@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 
 # Drowsiness Imports
+import playsound
 from playsound import playsound
 import dlib
 
