@@ -2,6 +2,7 @@
 __Driver Safety and Security__
 
 __Dataset Used__: State Farm Distracted Driver Detection.
+
 You may find the dataset for distracted drivers below at:
 https://www.kaggle.com/c/state-farm-distracted-driver-detection
 
@@ -36,5 +37,5 @@ This project is licensed under the MIT License - see the [License.md](License.md
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
 <p align="center">
-	Made with :heart: by Team Armada</a>
+	Made with :heart:  by Team Armada</a>
 </p>
