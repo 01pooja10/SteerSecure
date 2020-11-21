@@ -33,7 +33,7 @@ def realTime(model):
 
 	while True:
 		ret, frame = capture.read()
-		
+
 		img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		img = cv2.resize(img, (224,224))
 
@@ -41,29 +41,29 @@ def realTime(model):
 		img = img / 255.0
 
 		real_time.append(img)
-        
+
 		for i in range(len(real_time)):
 			mm = np.ndarray(shape=(1,224,224,3), dtype=np.float32)
 			mm[0] = real_time[i]
-			
+
 			pred = model.predict(mm)
 			# kk = np.argmax(pred)
 
 		print("Prediction Array: {}".format(pred))
 		print("amax: {}".format(np.amax(pred)))
-		
+
 		if np.amax(pred) > 0:
 			kk = np.argmax(pred)
 			print("kk: {}".format(kk))
 			cv2.putText(frame, list1[kk], (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
-		
+
 		placeHolder.image(frame, use_column_width=True, channels='BGR')
 
 		key = cv2.waitKey(1)
-		
+
 		if key == 27:
 			break
-	
+
 	st.stop()
 	capture.release()
 	cv2.destroyAllWindows()
@@ -146,10 +146,10 @@ def yawn(landmarks, frame):
 
 	top.append((x,y))
 
-	for i in range(66, 69):
+	for i in range(65, 68):
 		x1 = landmarks.part(i).x
 
-	for i in range(57, 60):
+	for i in range(56, 59):
 		y1 = landmarks.part(i).y
 
 	bottom.append((x1,y1))
@@ -168,19 +168,19 @@ def detect():
 	c = 0
 	alarm = 0
 	placeHolder2 = st.empty()
-	
+
 	while True:
 		ret, frame = capture.read()
 		gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 		faces = detect(gray)
-		
+
 		for face in faces:
 			p = face.left()
 			q = face.top()
 			r = face.right()
 			s = face.bottom()
 			landmarks = predict(gray, face)
-			
+
 			for i in range(68):
 				x = landmarks.part(i).x
 				y = landmarks.part(i).y
@@ -200,13 +200,13 @@ def detect():
 			y = yawn(landmarks, frame)
 			if y > yawn_threshold:
 				cv2.putText(frame,"YOU SEEM DROWSY!", (10,30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
-			
-			placeHolder2.image(frame, caption="Driver Live Video", use_column_width=True)
-		
+
+			placeHolder2.image(frame, caption="Driver Live Video", use_column_width=True,channels='BGR')
+
 		key = cv2.waitKey(1)
 		if key == 27:
 			break
-	
+
 	capture.release()
 	cv2.destroyAllWindows()
 
@@ -217,7 +217,7 @@ def load_chatbot(path):
 
 def input_bag(sen, words):
 	lemm = WordNetLemmatizer()
-	
+
 	bag = [0] * len(words)
 	wrds = nltk.word_tokenize(sen)
 
@@ -233,7 +233,7 @@ def input_bag(sen, words):
 def navChatbot(model, textInput):
 	with open('file dependencies/chatbot_intents.json') as file:
 		data = json.load(file,strict=False)
-	
+
 	words = pickle.load(open('file dependencies/words.pkl','rb'))
 	labels = pickle.load(open('file dependencies/labels.pkl','rb'))
 
@@ -251,11 +251,11 @@ def navChatbot(model, textInput):
 			if val['tag'] == tag:
 				resp = val['responses']
 				break
-		
+
 		return random.choice(resp)
 
 def drowsinessDet():
-	
+
 	html="""
 	<style>
     .element-container:nth-child(9) {
@@ -298,7 +298,7 @@ def main():
 		html = """
 		<style>
 		.element-container:nth-child(4)
-		{	
+		{
 			color: #40E0D0;
 		}
 		</style>
@@ -329,7 +329,7 @@ def main():
 		st.markdown("Several studies and surveys done throughout India highlight the dire state of drivers. More than 70% admitted to talking on the phone, listening to music while more than 5% of all surveyed drivers confessed to watching videos while driving.")
 
 		st.subheader("All-in-all, the statistics on traffic accidents in India are quite appalling. Over 400 people die tragically every day and more than 1500 are hospitalized with injuries. This is a tragic reality that we all need to try and set right. Not only is it a needless and tragic loss of life, but it also ends up costing the economy more than 1 trillion rupees in property damage and overhead economic costs every year.")
-		
+
 		st.title("Our aim is to try and rectify this in our own small way.")
 
 	elif option == 'Distraction Detector':
@@ -349,7 +349,7 @@ def main():
 		distractionDet(model)
 
 	elif option == 'Drowsiness Detector':
-		
+
 		html = """
 		<style>
 		.element-container:nth-child(4)
@@ -364,7 +364,7 @@ def main():
 		drowsinessDet()
 
 	elif option == 'Nav ~ the Chatbot':
-		
+
 		html = """
 		<style>
 		.element-container:nth-child(3)
