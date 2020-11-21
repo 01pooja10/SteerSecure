@@ -47,7 +47,7 @@ def detect():
             if y > yawn_thresh:
                 cv2.putText(frame, "YOU SEEM DROWSY!", (10,30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255),2)
             cv2.imshow("Webcam", frame)
- 
+
         key = cv2.waitKey(1)
         if key == 27:
             break
@@ -59,14 +59,13 @@ def EAR(landmarks,frame):
     left = []
     right = []
     alarm = 0
-    
+
     # left eye
     for i in range(36,42):
         x = landmarks.part(i).x
         y = landmarks.part(i).y
         left.append((x,y))
-        
-        # we probably don't need this nextpt thing here
+
         nextpt1 += 1
         if i == 41:
             nextpt1 = 36
@@ -80,8 +79,7 @@ def EAR(landmarks,frame):
         x = landmarks.part(i).x
         y = landmarks.part(i).y
         right.append((x,y))
-        
-        # we probably don't need this nextpt thing here
+
         nextpt2 = i+1
         if i == 47:
             nextpt2 = 42
@@ -97,27 +95,27 @@ def EAR(landmarks,frame):
     return ratio
 
 def aspect_ratio(eye):
-    # found a numpy alternative for euclidean distance
-    # this way we can get rid of having to import one more package just for this
-    a = np.linalg.norm(eye[1], eye[5])
-    b = np.linalg.norm(eye[2], eye[4])
-    c = np.linalg.norm(eye[0], eye[3])
+    #numpy alternative for euclidean distance
+    eye=np.squeeze(eye)
+    a = np.linalg.norm(eye[1]-eye[5])
+    b = np.linalg.norm(eye[2]-eye[4])
+    c = np.linalg.norm(eye[0]-eye[3])
 
     final_ratio = (a + b)/(2.0 * c)
     return final_ratio
 
 def yawn(landmarks,frame):
     top, bottom= [], []
-    
-    for i in range(50,53): # should rather be 51, 54
+
+    for i in range(51,54):
         x = landmarks.part(i).x
-    for i in range(62,65): # should rather be 62, 65
+    for i in range(62,65):
         y = landmarks.part(i).y
     top.append((x,y))
 
-    for i in range(64,67): # should rather be 66, 69
+    for i in range(65,68):
         x1 = landmarks.part(i).x
-    for i in range(56,59): # should rather be 57, 60
+    for i in range(56,59):
         y1 = landmarks.part(i).y
     bottom.append((x1,y1))
 
