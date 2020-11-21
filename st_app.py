@@ -5,8 +5,8 @@ import numpy as np
 import cv2
 
 # Drowsiness Imports
-import playsound
-from playsound import playsound
+# import playsound
+# from playsound import playsound
 import dlib
 
 # Chatbot Imports
@@ -195,7 +195,8 @@ def detect():
 			if x < eye_closed:
 				c += 1
 				if c >= eye_threshold:
-					playsound(r"file dependencies/alarm.mp3")
+					# playsound(r"file dependencies/alarm.mp3")
+					cv2.putText(frame,"YOU SEEM TIRED! GET SOME REST!", (10,30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
 					c = 0
 
 			y = yawn(landmarks, frame)
