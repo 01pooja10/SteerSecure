@@ -1,12 +1,12 @@
 # General Imports
-import streamlit as st # 8 MB
-import keras # in KBs
-import numpy as np # 16 MB
-import cv2 # approx. 35 MBs
+import streamlit as st
+import keras
+import numpy as np
+import cv2
 
 # Drowsiness Imports
-import playsound # in KBs
-import dlib # approx 4 MBs
+import playsound
+import dlib
 
 # Chatbot Imports
 import json
