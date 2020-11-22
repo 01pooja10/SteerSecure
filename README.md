@@ -26,7 +26,8 @@ An application called __SteerSecure__ for driver safety using distraction detect
 ## Use cases:
 The use cases of our proof of concept web application are aplenty so let's explore them:
 -  Can be used as an in-built module in a car to monitor driver activity and hence, safety.
--  Can be used to generate a detailed history of driver's attributes 
+-  Can be used to generate a detailed history of driver's behavior in case of any unfortunate incidents
+-  Can be used to monitor driver activity seamlessly and generate predictions depending on their safety status
 
 ## Some features of SteerSecure:
 SteerSecure comes packaged with a wide array of exotic features and we'll explain some significant ones:
@@ -52,7 +53,7 @@ __Drowsiness Detector Page__
 ## Future Developments to SteerSecure:
 1) Integrate with an interface inside your car, similar to a dashboard, for quick access to our services
 2) Chatbot automatically sends messages to your loved ones alerting them if it notices regular patterns of drowsiness or Distraction
-3) Car goes into self driving mode automatically when the SteerSecure app sends information regarding driver's alertness
+3) Car goes into self driving mode automatically when the SteerSecure app sends concerning information regarding driver's alertness
 
 
 ## License
