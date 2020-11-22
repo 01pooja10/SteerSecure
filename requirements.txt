@@ -6,3 +6,4 @@ opencv_python_headless==4.4.0.46
 dlib==19.21.0
 protobuf==3.14.0
 pydub==0.24.1
+tensorflow==2.3.1

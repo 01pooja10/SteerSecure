@@ -34,7 +34,10 @@ __Distracted Detector Page__
 __Drowsiness Detector Page__
 ![image](https://user-images.githubusercontent.com/20011207/99869175-f48ca180-2bee-11eb-9a78-00dc7df2ca89.png)
 
-
+## Future Developments to SteerSecure:
+1) Integrate with an interface inside your car, similar to a dashboard, for quick access to our services
+2) Chatbot automatically sends messages to your loved ones alerting them if it notices regular patterns of drowsiness or Distraction
+3) Car goes into self driving mode automatically when the SteerSecure app sends information regarding driver's alertness
 ## License
 
 MIT © Pooja Ravi
