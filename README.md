@@ -37,17 +37,56 @@ __Drowsiness Detector Page__
 __Nav ~ the Chatbot__
 ![Screen Shot 2020-11-22 at 08 12 42](https://user-images.githubusercontent.com/20011207/99892782-b5b62480-2c9e-11eb-866a-218a03fedc6e.png)
 
+## Challenges Faced
+1) Deploying to Streamlit and Heroku failed for a number of reasons, including working in different OSes and Conda environments but mostly due to size of the imports and the resource limits.
+2) Getting the webcam to shut off after Stop button is pressed on Streamlit to preserve user privacy.
+3) Getting correct predictions in notebook but incorrect ones in our web-app for distracted drivers.
+4) We were not able to solve the last issue entirely but definitely look forward to doing so in the future!
+
 ## Future Developments to SteerSecure:
 1) Integrate with an interface inside your car, similar to a dashboard, for quick access to our services
 2) Chatbot automatically sends messages to your loved ones alerting them if it notices regular patterns of drowsiness or Distraction
 3) Car slows down and pulls over automatically when the SteerSecure app detects driver getting very drowsy
 4) Car can also automatically go into self-driving mode when it detects that the user is too exhausted
 
-## Challenges Faced
-1) Deploying to Streamlit and Heroku failed for a number of reasons, including working in different OSes and Conda environments but mostly due to size of the imports and the resource limits.
-2) Getting the webcam to shut off after Stop button is pressed on Streamlit to preserve user privacy.
-3) Getting correct predictions in notebook but incorrect ones in our web-app for distracted drivers.
-4) We were not able to solve the last issue entirely but definitely look forward to doing so in the future!
+## Contributors
+
+
+<table align="center">
+<tr align="center">
+
+
+<td width:25%>
+Aditya Shukla
+
+<p align="center">
+<img src = "https://avatars1.githubusercontent.com/u/20011207?s=400&u=7570f3915eca3bcd55cd72c60038e4f68965db4b&v=4"  height="120" alt="Aditya Shukla">
+</p>
+<p align="center">
+<a href = "https://github.com/adityashukzy"><img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36"/></a>
+<a href = "https://www.linkedin.com/in/aditya-shukla-975940188/">
+<img src = "http://www.iconninja.com/files/863/607/751/network-linkedin-social-connection-circular-circle-media-icon.svg" width="36" height="36"/>
+</a>
+</p>
+</td>
+
+
+<td width:25%>
+
+Pooja Ravi
+
+<p align="center">
+<img src = "https://avatars3.githubusercontent.com/u/66198904?s=460&u=06bd3edde2858507e8c42569d76d61b3491243ad&v=4"  height="120" alt="Ansh Sharma">
+</p>
+<p align="center">
+<a href = "https://github.com/01pooja10"><img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36"/></a>
+<a href = "https://www.linkedin.com/in/pooja-ravi-9b88861b2/">
+<img src = "http://www.iconninja.com/files/863/607/751/network-linkedin-social-connection-circular-circle-media-icon.svg" width="36" height="36"/>
+</a>
+</p>
+</td>
+
+</table>
 
 ## License
 MIT © Pooja Ravi
