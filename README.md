@@ -29,7 +29,7 @@ Our goal, very simply, is to curb this loss of life and property as best we can.
 ## Problem Statement
 As statistics show, there occur more than 400 deaths per day in India only due to drivers getting distracted or too drowsy to keep their eyes on the road. So, we decided to build an application called __SteerSecure__ to tackle this problem. Our deep learning based web application is built for driver safety; it contains components like distraction detection, drowsiness detection and a chatbot for informing customers about information regarding driver safety, app usage and navigation through different components.
 
-## Use cases for SteerSecure
+## Features of SteerSecure
 -  Detect 9 types of distractions faced by drivers like texting, adjusting hair or makeup, talking to a passenger etc.
 -  Detect drowsiness and yawns among drivers using real time video from a camera
 -  Chatbot provides useful statistics and information regarding our problem statement and usage of SteerSecure web app.
