@@ -9,7 +9,7 @@ You may find the dataset for distracted drivers below at:
 https://www.kaggle.com/c/state-farm-distracted-driver-detection
 
 ## Devfolio Project Page & Youtube Demo Video
-SteerSecure was built as Pooja Ravi and Aditya Shukla's official submission at Octahacks 3.0 hosted by Chitkara University. Check out our Devfolio submission page and a Youtube video demonstrating SteerSecure below.
+SteerSecure was built as Pooja Ravi and Aditya Shukla's official submission at Octahacks 3.0, a 36 hour virtual hackathon, hosted by Chitkara University. Check out our Devfolio submission page and a Youtube video demonstrating SteerSecure below.
 
 Devfolio Page: https://devfolio.co/submissions/steersecure
 
@@ -26,13 +26,13 @@ The data is very clear: more than 30% of accidents are caused due to fatigue cau
 
 Our goal, very simply, is to curb this loss of life and property as best we can. SteerSecure aims to discourage distracted drivers and encourage drowsy drivers to take rest, or pull over before continuing on the journey later.
 
+## Problem Statement
+As statistics show, there occur more than 400 deaths per day in India only due to drivers getting distracted or too drowsy to keep their eyes on the road. So, we decided to build an application called __SteerSecure__ to tackle this problem. Our deep learning based web application is built for driver safety; it contains components like distraction detection, drowsiness detection and a chatbot for informing customers about information regarding driver safety, app usage and navigation through different components.
+
 ## Use cases for SteerSecure
 -  Detect 9 types of distractions faced by drivers like texting, adjusting hair or makeup, talking to a passenger etc.
 -  Detect drowsiness and yawns among drivers using real time video from a camera
--  Chatbot provides useful statistics and information regarding our problem statement and usage of SteerSecure web app. 
-
-## Problem Statement
-An application called __SteerSecure__ for driver safety using distraction detection, drowsiness detection and a chatbot for informing customers about information regarding driver safety, app usage and navigation through different components.
+-  Chatbot provides useful statistics and information regarding our problem statement and usage of SteerSecure web app.
 
 ## Screenshots of the Web-App
 __Welcome Page__
