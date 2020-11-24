@@ -8,6 +8,13 @@ You may find the dataset for distracted drivers below at:
 
 https://www.kaggle.com/c/state-farm-distracted-driver-detection
 
+## Devfolio Project Page & Youtube Demo Video
+SteerSecure was built as Pooja Ravi and Aditya Shukla's official submission at Octahacks 3.0 hosted by Chitkara University. Check out our Devfolio submission page and a Youtube video demonstrating SteerSecure below.
+
+Devfolio Page: https://devfolio.co/submissions/steersecure
+
+Youtube: https://www.youtube.com/watch?v=zp9t6rTe8Ws
+
 ## Description
 **SteerSecure** is a driver-safety app built using machine learning libraries such as Tensorflow and OpenCV, and scripted and deployed to the web using Streamlit. Our aim with SteerSecure is to make vehicular travel safer. Our three primary web-applications are:
 
