@@ -9,18 +9,23 @@ You may find the dataset for distracted drivers below at:
 https://www.kaggle.com/c/state-farm-distracted-driver-detection
 
 ## Description
-**SteerSecure** is a driver-safety app built using machine learning libraries such as Tensorflow and OpenCV, and scripted and deployed to the web using Streamlit. Our aim with SteerSecure is to make vehicular travel safer. Our two primary web-applications are:
+**SteerSecure** is a driver-safety app built using machine learning libraries such as Tensorflow and OpenCV, and scripted and deployed to the web using Streamlit. Our aim with SteerSecure is to make vehicular travel safer. Our three primary web-applications are:
 
 -  Distraction Detection
 -  Drowsiness Detection
+-  Chatbot to provide insight into our web app
 
-
-The data is very clear: more than 30% of accidents are caused due to fatigue caused by long, nonstop hours of driving and sleep-deprication. A large majority of accidents are also caused by distracted drivers: texting, speaking to passengers, talking on the phone, etc. Such accidents cause more than 400 deaths everyday in India. Not only is it a tragic loss of life, but it also costs our economy upwards of 1 trillion rupees every year.
+The data is very clear: more than 30% of accidents are caused due to fatigue caused by long, nonstop hours of driving and sleep-deprivation. A large majority of accidents are also caused by distracted drivers: texting, speaking to passengers, talking on the phone, etc. Such accidents cause more than 400 deaths everyday in India. Not only is it a tragic loss of life, but it also costs our economy upwards of 1 trillion rupees every year.
 
 Our goal, very simply, is to curb this loss of life and property as best we can. SteerSecure aims to discourage distracted drivers and encourage drowsy drivers to take rest, or pull over before continuing on the journey later.
 
+## Use cases for SteerSecure
+-  Detect 9 types of distractions faced by drivers like texting, adjusting hair or makeup, talking to a passenger etc.
+-  Detect drowsiness and yawns among drivers using real time video from a camera
+-  Chatbot provides useful statistics and information regarding our problem statement and usage of SteerSecure web app. 
+
 ## Problem Statement
-An application called __SteerSecure__ for driver safety using distraction detection, drowsiness detection and a proposed chatbot for informing customers.
+An application called __SteerSecure__ for driver safety using distraction detection, drowsiness detection and a chatbot for informing customers about information regarding driver safety, app usage and navigation through different components.
 
 ## Screenshots of the Web-App
 __Welcome Page__
